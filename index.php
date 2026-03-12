@@ -2,6 +2,7 @@
   session_start();
   require_once("config/koneksi.php");
   if(isset($_SESSION['Username'])){
+    $role = $_SESSION['Role'];
 ?>
 <!DOCTYPE html>
 <!--
@@ -84,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['Username'] ?></a>
         </div>
       </div>
 
@@ -105,23 +106,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          <?php if($role == 'Admin') : ?>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Master
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fas fa-angle-left"></i> 
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <li class="nav-item">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Mata Pelajaran</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Guru</p>
                 </a>
@@ -156,7 +158,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Jadwal</p>
                 </a>
               </li>
-            <li>
+            </ul>
+          </li>
+          <?php endif ?>
+          <?php if($role == 'Siswa') : ?>
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Siswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal</p>
+                </a>
+              </li>
+            <?php endif ?>
+
+            <?php if($role == 'Guru') : ?>
+            <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Guru</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kelas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+            <li class="nav-item menu-open">
+                <a href="#" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal</p>
+                </a>
+              </li>
+            <?php endif ?>
+
             <a href="logout.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
@@ -202,7 +243,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h5 class="card-title">Card title</h5>
 
                 <p class="card-text">
-                  Selamat Datang di Sistem Jadwal Guru SMA Yosef
+                  Selamat Datang di Sistem Jadwal Guru SMA/SMK XYZ
                 </p>
 
                 <a href="#" class="card-link">Card link</a>
@@ -256,7 +297,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </html>
 
 <?php
-  }else{
+  } else {
     echo"<meta http-equiv='refresh'content='0 url =login.php'>";
   }
 ?>
