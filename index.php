@@ -1,14 +1,13 @@
-<?php
-  session_start();
-  require_once("config/koneksi.php");
-  if(isset($_SESSION['Username'])){
-    $role = $_SESSION['Role'];
-?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
+<?php
+  session_start();
+  require_once("config/koneksi.php");
+  if(isset($_SESSION["Username"])){
+  ?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -85,7 +84,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['Username'] ?></a>
+          <a href="#" class="d-block"><?php echo $_SESSION['Username']; ?></a>
         </div>
       </div>
 
@@ -106,44 +105,92 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <?php if($role == 'Admin') : ?>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Master
-                <i class="right fas fa-angle-left"></i> 
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Mata Pelajaran</p>
-                </a>
-              </li>
+          
+              <?php if($_SESSION['Role']=="admin"){ ?>
+              <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Guru</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="index.php?page=siswa" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+              <p>Siswa</p>
+                </a>
+                  </li>
+
+            <li class="nav-item">
+              <a href="index.php?page=mapel" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+            <p>Mapel</p>
+              </a>
+                </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+            <p>kelas</p>
+              </a>
+                </li>
+                <?php } ?>
+            
+              <?php if($_SESSION['Role']=="guru"){ ?>
+              <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Kelas</p>
+                  <p>Profil</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+              <p>Kelas</p>
+                </a>
+                  </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+              <p>Jadwal</p>
+                </a>
+                  </li>
+              <?php } ?>
+
+              <?php if($_SESSION['Role']=="siswa"){ ?>
+              <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Siswa</p>
+                  <p>Profil</p>
                 </a>
               </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <li class="nav-item menu-open">
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+              <p>Jadwal</p>
+                </a>
+                  </li>
+              <?php } ?>
+
+              <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -151,58 +198,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Jadwal</p>
                 </a>
               </li>
             </ul>
           </li>
-          <?php endif ?>
-          <?php if($role == 'Siswa') : ?>
-            <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Siswa</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Jadwal</p>
-                </a>
-              </li>
-            <?php endif ?>
 
-            <?php if($role == 'Guru') : ?>
-            <li class="nav-item">
-                <a href="#" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Guru</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kelas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-            <li class="nav-item menu-open">
-                <a href="#" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Jadwal</p>
-                </a>
-              </li>
-            <?php endif ?>
-
+          <li class="nav-item">
             <a href="logout.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Logout
-                <span class="right badge badge-danger">New</span>
+                logout
               </p>
             </a>
           </li>
@@ -237,24 +247,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">Dashboard</h5>
 
                 <p class="card-text">
-                  Selamat Datang di Sistem Jadwal Guru SMA/SMK XYZ
+                  <?php
+                  if(isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                  } else {
+                    $page = "";
+                  }
+                  if ($page == "") {
+                    include "page/dashboard.php";
+                  } elseif (!file_exists("page/$page.php")) {
+                    echo "File Tidak Ditemukan";
+                  } else {
+                    include "page/$page.php";
+                  }
+                  ?>
                 </p>
 
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+              
               </div>
             </div>
 
-          
+            
+              </div>
+            </div>
           </div>
           <!-- /.col-md-6 -->
-       
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -295,9 +318,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>
-
 <?php
   } else {
-    echo"<meta http-equiv='refresh'content='0 url =login.php'>";
+    echo"<meta http-equiv='refresh' content='0; url=login.php'>";
   }
 ?>
