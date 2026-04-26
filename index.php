@@ -7,6 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   session_start();
   require_once("config/koneksi.php");
   if(isset($_SESSION["Username"])){
+    $role = $_SESSION['Role'];
   ?>
 <html lang="en">
 <head>
@@ -114,10 +115,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           
-              <?php if($_SESSION['Role']=="admin"){ ?>
+              <?php if($role=="admin"){ ?>
               <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?page=guru" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Guru</p>
                 </a>
@@ -138,14 +139,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="index.php?page=kelas" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
             <p>kelas</p>
               </a>
                 </li>
                 <?php } ?>
             
-              <?php if($_SESSION['Role']=="guru"){ ?>
+              <?php if($role=="guru"){ ?>
               <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -162,14 +163,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
 
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?page=ganti_password" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-              <p>Jadwal</p>
+              <p>Ganti Password</p>
                 </a>
                   </li>
               <?php } ?>
 
-              <?php if($_SESSION['Role']=="siswa"){ ?>
+              <?php if($role=="mahasiswa"){ ?>
               <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -179,9 +180,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
 
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?page=ganti_password" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-              <p>Jadwal</p>
+              <p>Ganti Password</p>
                 </a>
                   </li>
               <?php } ?>

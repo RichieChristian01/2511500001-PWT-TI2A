@@ -26,7 +26,7 @@
 
         $insert = mysqli_query($koneksi,"INSERT INTO tbl_mapel values ('$Kd_mapel','$Nm_mapel','$Kkm')");
         if ($insert) {
-            echo '<div class="alert alert-info-dismissble">
+            echo '<div class="alert alert-info-dismissible">
             <button type="button" class="close" data-dismiss="alert"
                 aria-hidden="true">X</button>
             <h5><i class="icon fas fa-info"></i> Info </h5>
@@ -37,7 +37,7 @@
             <button type="button" class="close" data-dismiss="alert"
                 aria-hidden="true">X</button>
             <h5><i class="icon fas fa-info"></i> Info </h5>
-            <h4>Berhasil Disimpan</h4></div>';
+            <h4>Gagal Disimpan</h4></div>';
         }
     }
 ?>

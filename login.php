@@ -70,24 +70,36 @@
 
 
 <?php
-if(isset($_POST['Username'])) {
+if (isset($_POST['Username'])) {
     $Username = $_POST['Username'];
     $Password = $_POST['Password'];
 
-    if(empty($Username) || empty($Password)) {
+    if (empty($Username) || empty($Password)) {
         echo "Data Tidak Boleh kosong";
     } else {
-        $userquery = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM users WHERE Username = '$Username' AND Password = '$Password' "));
-        if($userquery) {
-            $_SESSION['Username'] = $Username;
-            $_SESSION['Role'] = $userquery['Role'];
-            header("location:index.php");
+        $userquery = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM users WHERE Username = '$Username' "));
+        
+        if ($userquery) {
+          if ($Password == $userquery['Password']) {
+              $_SESSION['Role'] = $userquery['Role'];
+              $_SESSION['Username'] = $Username;  
+
+              if ($userquery['Role'] == 'admin') {
+                  header("location:index.php");
+              } else if ($userquery['Role'] == 'guru' || $userquery['Role'] == 'mahasiswa') {
+                  if ($userquery['Password'] == '1234') {
+                      header("Location: index.php?page=ganti_password");
+                  } else {
+                      header("location:index.php");
+                  }
+              }
+          }
         } else {
             echo '<div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-                Login gagal
-            </div>';
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                    Login gagal
+                  </div>';
         }
     }
 }
