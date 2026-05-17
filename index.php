@@ -144,6 +144,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <p>kelas</p>
               </a>
                 </li>
+
+            <li class="nav-item">
+              <a href="index.php?page=ekstra001" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+            <p>Ekstrakurikuler</p>
+              </a>
+                </li>
                 <?php } ?>
             
               <?php if($role=="guru"){ ?>
@@ -201,7 +208,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?page=jadwal_kelas" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Jadwal</p>
                 </a>

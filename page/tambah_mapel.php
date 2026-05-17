@@ -8,7 +8,7 @@
     </div>
 </div>
 <?php
-    $carikode = mysqli_query($koneksi,"select max(Kd_mapel) from tbl_mapel") or die (
+    $carikode = mysqli_query($koneksi,"select max(kd_mapel) from tbl_mapel") or die (
         mysqli_error());
     $datakode = mysqli_fetch_array($carikode);
     if($datakode) {
@@ -20,11 +20,11 @@
     $_SESSION["KODE"] = $hasilkode;
 
     if(isset($_POST['tambah'])){
-        $Kd_mapel = $_POST['Kd_mapel'];
+        $kd_mapel = $_POST['kd_mapel'];
         $Nm_mapel = $_POST['Nm_mapel'];
         $Kkm = $_POST['Kkm'];
 
-        $insert = mysqli_query($koneksi,"INSERT INTO tbl_mapel values ('$Kd_mapel','$Nm_mapel','$Kkm')");
+        $insert = mysqli_query($koneksi,"INSERT INTO tbl_mapel values ('$kd_mapel','$Nm_mapel','$Kkm')");
         if ($insert) {
             echo '<div class="alert alert-info-dismissible">
             <button type="button" class="close" data-dismiss="alert"
@@ -49,8 +49,8 @@
                 <div class="card-body p-2">
                     <form method="POST" action="">
                             <div class="form-group">
-                                <label for="Kd_mapel">Kode Mapel</label>
-                                <input type="text" name="Kd_mapel" value="<?= 
+                                <label for="kd_mapel">Kode Mapel</label>
+                                <input type="text" name="kd_mapel" value="<?= 
                                     $hasilkode; ?>" placeholder="Id Kat" class="
                                 form-control" readonly>
                             </div>

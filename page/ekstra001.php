@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Data Mapel</h1>
+                <h1 class="m-0 text-dark">Data Ekstrakurikuler</h1>
             </div>
         </div>
     </div>
@@ -11,13 +11,13 @@
 <?php
 if(isset($_GET['action'])) {
     if($_GET['action'] == "hapus") {
-        $kd =$_GET['kd'];
-        $query = mysqli_query($koneksi, "DELETE FROM tbl_mapel where kd_mapel = '$kd' ");
+        $id =$_GET['id'];
+        $query = mysqli_query($koneksi, "DELETE FROM ekstra_2511500001 where id_ekstra001 = '$id' ");
         if ($query) {
         echo '
         <div class="alert alert-warning alert-dismissible">
         Berhasil Di Hapus</div>';
-        echo '<meta http-equiv="refresh" content="1;url=index.php?page=mapel">';
+        echo '<meta http-equiv="refresh" content="1;url=index.php?page=ekstra001">';
         }
     }
 }
@@ -27,32 +27,34 @@ if(isset($_GET['action'])) {
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <a href="index.php?page=tambah_mapel" class="btn btn-primary btn-sm">Tambah Mapel</a>
+                <a href="index.php?page=tambah_ekstra001" class="btn btn-primary btn-sm">Tambah Ekstrakulikuler</a>
                     <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>Kode Mapel</th>
-                            <th>Nama Mapel</th>
-                            <th>KKM</th>
-                            <th>Aksi</th>
+                            <th>Id ekstra</th>
+                            <th>Nama Ekstrakurikuler</th>
+                            <th>Keterangan</th>
+                            <th>Semester</th>
+                            <th>Tahun Ajaran</th>
                         </tr>
                     <thead>
                         <?php
                         $no = 0;
-                        $query= mysqli_query($koneksi,"SELECT * FROM tbl_mapel");
+                        $query= mysqli_query($koneksi,"SELECT * FROM ekstra_2511500001");
                         while ($result = mysqli_fetch_array($query) ) {
                             $no++;
                         ?>
                         <tbody>
                             <tr>
                                 <td><?=$no; ?></td>
-                                <td><?=$result ['kd_mapel']; ?></td>
-                                <td><?=$result ['Nm_mapel']; ?></td>
-                                <td><?=$result ['Kkm']; ?></td>
-                                <td><a href="index.php?page=mapel&action=hapus&kd=<?= $result['kd_mapel'] ?>" title="">
+                                <td><?=$result ['id_ekstra001']; ?></td>
+                                <td><?=$result ['nama_ekstra001']; ?></td>
+                                <td><?=$result ['ket001']; ?></td>
+                                <td><?=$result ['semester001']; ?></td>
+                                <td><?=$result ['thn_ajaran001']; ?></td>
+                                <td><a href="index.php?page=ekstra001&action=hapus&id=<?= $result['id_ekstra001'] ?>" title="">
                                     <span class="badge badge-danger">Hapus</span></a>
-                                    <a href="index.php?page=edit_mapel&kd=<?= $result['kd_mapel'] ?>" title="">
+                                    <a href="index.php?page=edit_ekstra001&id=<?= $result['id_ekstra001'] ?>" title="">
                                     <span class="badge badge-warning">Edit</span></a>
                                 </td>
                             </tr>

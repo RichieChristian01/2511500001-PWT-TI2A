@@ -8,11 +8,11 @@
     </div>
 </div>
 <?php
-   $Kd = $_GET['Kd'];
-   $edit = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tbl_mapel WHERE Kd_mapel='$Kd' "));
+   $kd = $_GET['kd'];
+   $edit = mysqli_fetch_array(mysqli_query($koneksi, "SELECT * FROM tbl_mapel WHERE kd_mapel='$kd' "));
 
     if(isset($_POST['tambah'])){
-        $Kd_mapel = $_POST['Kd_mapel'];
+        $kd_mapel = $_POST['kd_mapel'];
         $Nm_mapel = $_POST['Nm_mapel'];
         $Kkm = $_POST['Kkm'];
 
@@ -41,9 +41,9 @@
                 <div class="card-body p-2">
                     <form method="POST" action="">
                             <div class="form-group">
-                                <label for="Kd_mapel">Kode Mapel</label>
-                                <input type="text" name="Kd_mapel" value="<?= 
-                                    $edit['Kd_mapel']; ?>"  class="form-control" readonly>
+                                <label for="kd_mapel">Kode Mapel</label>
+                                <input type="text" name="kd_mapel" value="<?= 
+                                    $edit['kd_mapel']; ?>"  class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="Nm_mapel">Nama Mapel</label>
