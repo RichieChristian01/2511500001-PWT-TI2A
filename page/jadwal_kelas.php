@@ -1,3 +1,31 @@
+<?php
+if (isset($_GET['hapus'])) {
+    $kd_jadwal = $_GET['hapus'];
+
+    // Hapus detail jadwal dulu
+    mysqli_query($koneksi, "DELETE FROM detail_jadwal WHERE kd_jadwal = '$kd_jadwal'");
+
+    // Lalu hapus jadwal
+    $hapus = mysqli_query($koneksi, "DELETE FROM jadwal WHERE kd_jadwal = '$kd_jadwal'");
+
+    if ($hapus) {
+      echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+      <strong>Berhasil!</strong> Data jadwal telah dihapus.
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+      </button>
+      </div>";
+    } else {
+      echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+      <strong>Gagal!</strong> Tidak dapat menghapus data.
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+      </button>
+      </div>";
+    }
+  }
+?>
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -8,61 +36,59 @@
     </div>
 </div>
 
-<?php
-if(isset($_GET['action'])) {
-    if($_GET['action'] == "hapus") {
-        $id =$_GET['id'];
-        $query = mysqli_query($koneksi, "DELETE FROM jadwal_kelas where id_kelas = '$id' ");
-        if ($query) {
-        echo '
-        <div class="alert alert-warning alert-dismissible">
-        Berhasil Di Hapus</div>';
-        echo '<meta http-equiv="refresh" content="1;url=index.php?page=jadwal_kelas">';
-        }
-    }
-}
-?>
-
 <div class="content">
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <a href="index.php?page=tambah_jadwal" class="btn btn-primary btn-sm">Tambah Jadwal</a>
-                    <table class="table table-striped">
+
+                <a href="index.php?page=tambah_jadwal" class="btn btn-primary btn-sm">
+                    Tambah Jadwal
+                </a>
+
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>ID Jadwal</th>
-                            <th>ID Kelas</th>
-                            <th>Tahun Ajaran</th>
+                            <th>Kode Jadwal</th>
+                            <th>Guru</th>
                             <th>Semester</th>
+                            <th>Tahun Ajaran</th>
+                            <th>Detail Jadwal</th>
                             <th>Aksi</th>
                         </tr>
-                    <thead>
-                        <?php
-                        $no = 0;
-                        $query= mysqli_query($koneksi,"SELECT jadwal_kelas.id_jadwal, jadwal_kelas.id_kelas, jadwal_kelas.thn_ajaran, jadwal_kelas.semester, tbl_kelas.nm_kelas 
-                                            FROM jadwal_kelas 
-                                            JOIN tbl_kelas ON jadwal_kelas.id_kelas = tbl_kelas.id_kelas");
-                        while ($result = mysqli_fetch_array($query) ) {
-                            $no++;
-                        ?>
-                        <tbody>
-                            <tr>
-                                <td><?=$no; ?></td>
-                                <td><?=$result ['id_jadwal']; ?></td>
-                                <td><?=$result ['id_kelas']; ?></td>
-                                <td><?=$result ['thn_ajaran']; ?></td>
-                                <td><?=$result ['semester']; ?></td>
-                                <td><a href="index.php?page=jadwal_kelas&action=hapus&id=<?= $result['id_kelas'] ?>" title="">
-                                    <span class="badge badge-danger">Hapus</span></a>
-                                    <a href="index.php?page=detail_jadwal&id=<?= $result['id_kelas'] ?>" title="">
-                                    <span class="badge badge-warning">Edit</span></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    <?php } ?>
+                    </thead>
+                    <tbody>
+                    <?php
+                        $query = mysqli_query($koneksi, "SELECT * FROM jadwal JOIN tbl_guru ON jadwal.kd_guru = tbl_guru.kd_guru");
+                        while ($row = mysqli_fetch_assoc($query)) {
+                         echo "<tr>
+                            <td>{$row['kd_jadwal']}</td>
+                            <td>{$row['nm_guru']}</td>
+                            <td>{$row['semester']}</td>
+                            <td>{$row['tahun_ajaran']}</td>
+                            <td>
+                            <ul>";
+                                $det = mysqli_query($koneksi, "SELECT detail_jadwal.*, tbl_mapel.nm_mapel FROM detail_jadwal 
+                        JOIN tbl_mapel ON detail_jadwal.kd_mapel = tbl_mapel.kd_mapel
+                        WHERE detail_jadwal.kd_jadwal = '{$row['kd_jadwal']}'");
+                        while ($d = mysqli_fetch_assoc($det)) {
+                         echo "<li>{$d['nm_mapel']} - {$d['hari']} - {$d['jam']} - {$d['kelas']}</li>";
+                        }
+                        echo 
+                        "</ul>
+                        </td>
+                        <td>
+                        <a href='index.php?page=jadwal_kelas&hapus={$row['kd_jadwal']}'
+                        onclick=\"return confirm('Yakin ingin menghapus data ini?')\"
+                        class='btn btn-danger btn-sm'>Hapus</a>
+                        </td>
+                        </tr>";
+                    }
+                    ?>
+
+
+                    </tbody>
                 </table>
+
             </div>
         </div>
     </div>

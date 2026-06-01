@@ -21,10 +21,10 @@
 
     if(isset($_POST['tambah'])){
         $kd_mapel = $_POST['kd_mapel'];
-        $Nm_mapel = $_POST['Nm_mapel'];
+        $nm_mapel = $_POST['nm_mapel'];
         $Kkm = $_POST['Kkm'];
 
-        $insert = mysqli_query($koneksi,"INSERT INTO tbl_mapel values ('$kd_mapel','$Nm_mapel','$Kkm')");
+        $insert = mysqli_query($koneksi,"INSERT INTO tbl_mapel values ('$kd_mapel','$nm_mapel','$Kkm')");
         if ($insert) {
             echo '<div class="alert alert-info-dismissible">
             <button type="button" class="close" data-dismiss="alert"
@@ -55,8 +55,8 @@
                                 form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="Nm_mapel">Nama Mapel</label>
-                                <input type="text" name="Nm_mapel" id="Nm_mapel"
+                                <label for="nm_mapel">Nama Mapel</label>
+                                <input type="text" name="nm_mapel" id="nm_mapel"
                                 placeholder="Nama Mapel" class="form-control">
                             </div>
                              <div class="form-group">

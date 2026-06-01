@@ -13,10 +13,10 @@
 
     if(isset($_POST['tambah'])){
         $kd_mapel = $_POST['kd_mapel'];
-        $Nm_mapel = $_POST['Nm_mapel'];
+        $nm_mapel = $_POST['nm_mapel'];
         $Kkm = $_POST['Kkm'];
 
-        $insert = mysqli_query($koneksi,"UPDATE tbl_mapel SET nm_mapel='$nm_mapel', kkm='$kkm' WHERE kd_mapel='$kd_mapel' ");
+        $insert = mysqli_query($koneksi,"UPDATE tbl_mapel SET nm_mapel='$nm_mapel', Kkm='$Kkm' WHERE kd_mapel='$kd_mapel' ");
         if ($insert) {
             echo '<div class="alert alert-info-dismissble">
             <button type="button" class="close" data-dismiss="alert"
@@ -46,12 +46,12 @@
                                     $edit['kd_mapel']; ?>"  class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="Nm_mapel">Nama Mapel</label>
-                                <input type="text" name="Nm_mapel" value="<?= 
-                                    $edit['Nm_mapel']; ?>" id="Nm_mapel" placeholder="Nama Mapel" class="form-control">
+                                <label for="nm_mapel">Nama Mapel</label>
+                                <input type="text" name="nm_mapel" value="<?= 
+                                    $edit['nm_mapel']; ?>" id="nm_mapel" placeholder="Nama Mapel" class="form-control">
                             </div>
                              <div class="form-group">
-                                <label for="Kkm">KKM</label>
+                                <label for="Kkm">Kkm</label>
                                 <input type="text" name="Kkm" value="<?= 
                                     $edit['Kkm']; ?>" id="Kkm" placeholder="Kkm" class="form-control">
                             </div>

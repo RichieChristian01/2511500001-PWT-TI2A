@@ -48,7 +48,7 @@ if(isset($_GET['action'])) {
                             <tr>
                                 <td><?=$no; ?></td>
                                 <td><?=$result ['kd_mapel']; ?></td>
-                                <td><?=$result ['Nm_mapel']; ?></td>
+                                <td><?=$result ['nm_mapel']; ?></td>
                                 <td><?=$result ['Kkm']; ?></td>
                                 <td><a href="index.php?page=mapel&action=hapus&kd=<?= $result['kd_mapel'] ?>" title="">
                                     <span class="badge badge-danger">Hapus</span></a>
