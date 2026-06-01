@@ -9,14 +9,14 @@ if (isset($_GET['hapus'])) {
     $hapus = mysqli_query($koneksi, "DELETE FROM jadwal WHERE kd_jadwal = '$kd_jadwal'");
 
     if ($hapus) {
-      echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+      echo "<div class='alert alert-success alert-dismissible fade show' Role='alert'>
       <strong>Berhasil!</strong> Data jadwal telah dihapus.
       <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
       <span aria-hidden='true'>&times;</span>
       </button>
       </div>";
     } else {
-      echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+      echo "<div class='alert alert-danger alert-dismissible fade show' Role='alert'>
       <strong>Gagal!</strong> Tidak dapat menghapus data.
       <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
       <span aria-hidden='true'>&times;</span>
