@@ -40,9 +40,13 @@ if (isset($_GET['hapus'])) {
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-
+                
                 <a href="index.php?page=tambah_jadwal" class="btn btn-primary btn-sm">
                     Tambah Jadwal
+                </a>
+
+                <a href="index.php?page=cetak" class="btn btn-primary btn-sm">
+                    Cetak Jadwal
                 </a>
 
                 <table class="table table-bordered table-hover">
@@ -76,10 +80,11 @@ if (isset($_GET['hapus'])) {
                         echo 
                         "</ul>
                         </td>
-                        <td>
-                        <a href='index.php?page=jadwal_kelas&hapus={$row['kd_jadwal']}'
-                        onclick=\"return confirm('Yakin ingin menghapus data ini?')\"
-                        class='btn btn-danger btn-sm'>Hapus</a>
+                            <td>
+                                <a href='index.php?page=edit_jadwal&hapus={$row['kd_jadwal']}
+                                class='btn btn-danger btn-sm'>Edit</a>
+                                <a href='index.php?page=jadwal_kelas&hapus={$row['kd_jadwal']}'onclick=\"return confirm('Yakin ingin menghapus data ini?')\"
+                                class='btn btn-danger btn-sm'>Hapus</a>
                         </td>
                         </tr>";
                     }

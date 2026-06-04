@@ -207,6 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
 
+            <?php if($role=="admin"){ ?>
             <li class="nav-item">
                 <a href="index.php?page=jadwal_kelas" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -215,6 +216,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+            <?php } ?>
+
+            <?php if($role=="guru"){ ?>
+            <li class="nav-item">
+                <a href="index.php?page=jadwal_guru" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+            <?php } ?>
 
           <li class="nav-item">
             <a href="logout.php" class="nav-link">
