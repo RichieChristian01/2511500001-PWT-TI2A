@@ -1,54 +1,53 @@
 <?php
 require_once "config/koneksi.php";
 
-$kd_jadwal = isset($_GET['kd']) ? $_GET['kd'] : '';
+$kd_jadwalk = isset($_GET['kd']) ? $_GET['kd'] : '';
 
 // Ambil data jadwal
-$qJadwal = mysqli_query($koneksi, "SELECT * FROM jadwal WHERE kd_jadwal = '$kd_jadwal'");
-$jadwal  = mysqli_fetch_assoc($qJadwal);
+$jadwal = mysqli_query($koneksi, "SELECT * FROM jadwal_kelas WHERE kd_jadwalk = '$kd_jadwalk'");
+$jadwal  = mysqli_fetch_assoc($jadwal);
 
 if (!$jadwal) {
     echo '<div class="alert alert-danger">Data jadwal tkdak ditemukan.</div>';
-    echo '<meta http-equiv="refresh" content="2;url=index.php?page=jadwal"/>';
+    echo '<meta http-equiv="refresh" content="2;url=index.php?page=jadwal_kelas"/>';
     return;
 }
 
 // Proses update
 if (isset($_POST['update'])) {
-    $kd_guru    = trim($_POST['kd_guru']);
-    $semester   = $_POST['semester'];
+
+    $kd_jadwalk = $_POST['kd_jadwalk'];
+    $kd_kelas = $_POST['kd_kelas'];
+    $semester = $_POST['semester'];
     $tahun_ajaran = $_POST['tahun_ajaran'];
-    $Kd_mapel   = $_POST['Kd_mapel'];
-    $hari       = $_POST['hari'];
-    $jam        = $_POST['jam'];
-    $kelas      = $_POST['kelas'];
+    $kd_mapel = $_POST['kd_mapel'];
+    $nm_guru = $_POST['nm_guru'];
+    $hari = $_POST['hari'];
+    $jam = $_POST['jam'];
+    
+    mysqli_query($koneksi, "UPDATE jadwal_kelas SET kd_kelas='$kd_kelas', tahun_ajaran='$tahun_ajaran', semester='$semester'WHERE kd_jadwalk='$kd_jadwalk'") or die(mysqli_error($koneksi));
 
-    mysqli_query($koneksi, "UPDATE jadwal 
-                         SET kd_guru='$kd_guru', tahun_ajaran='$tahun_ajaran', semester='$semester' 
-                         WHERE kd_jadwal='$kd_jadwal'") or die(mysqli_error($koneksi));
+    mysqli_query($koneksi, "DELETE FROM detail_jadwal_kelas WHERE kd_jadwalk='$kd_jadwalk'");
 
-    mysqli_query($koneksi, "DELETE FROM detail_jadwal WHERE kd_jadwal='$kd_jadwal'");
-
-    for ($i = 0; $i < count($Kd_mapel); $i++) {
-        mysqli_query($koneksi, "INSERT INTO detail_jadwal (kd_jadwal, Kd_mapel, kelas, hari, jam) 
-                             VALUES ('$kd_jadwal','{$Kd_mapel[$i]}','{$kelas[$i]}','{$hari[$i]}','{$jam[$i]}')")
+    for ($i = 0; $i < count($kd_mapel); $i++) {
+        mysqli_query($koneksi, "INSERT INTO detailjadwalkelas (kd_jadwalk, kd_mapel, nm_guru, hari, jam)  VALUES ('$kd_jadwalk','{$kd_mapel[$i]}','{$nm_guru[$i]}','{$hari[$i]}','{$jam[$i]}')")
             or die(mysqli_error($koneksi));
     }
 
     echo '<div class="alert alert-success">Data berhasil diperbarui</div>';
-    echo '<meta http-equiv="refresh" content="2;url=index.php?page=jadwal"/>';
+    echo '<meta http-equiv="refresh" content="2;url=index.php?page=jadwal_kelas"/>';
     return;
 }
 
 // Ambil detail jadwal untuk ditampilkan di form
-$qDetail = mysqli_query($koneksi, "SELECT * FROM detail_jadwal WHERE kd_jadwal='$kd_jadwal'");
+$qDetail = mysqli_query($koneksi, "SELECT * FROM detail_jadwal_kelas WHERE kd_jadwalk='$kd_jadwalk'");
 $details = [];
-while ($d = mysqli_fetch_assoc($qDetail)) $details[] = $d;
-if (empty($details)) $details = [['Kd_mapel'=>'','hari'=>'','jam'=>'','kelas'=>'']];
+while ($k = mysqli_fetch_assoc($qDetail)) $details[] = $k;
+if (empty($details)) $details = [['kd_mapel'=>'','hari'=>'','jam'=>'','nm_guru'=>'']];
 ?>
 
 <div class="content-header">
-    <div class="container-flukd">
+    <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Edit Jadwal</h1>
@@ -58,24 +57,24 @@ if (empty($details)) $details = [['Kd_mapel'=>'','hari'=>'','jam'=>'','kelas'=>'
 </div>
 
 <div class="content">
-    <div class="container-flukd">
+    <div class="container-fluid">
         <div class="card">
             <div class="card-body">
                 <form method="post" action="">
                     <div class="form-group">
                         <label>Kode Jadwal</label>
-                        <input type="text" value="<?= $jadwal['kd_jadwal'] ?>" class="form-control" readonly>
+                        <input type="ikdden" name="kd_jadwalk" value="<?= $jadwal['kd_jadwalk'] ?>" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label>Guru</label>
-                        <select name="kd_guru" class="form-control" required>
-                            <option value="">Pilih Guru</option>
+                        <label>Kelas</label>
+                        <select name="kd_kelas" class="form-control" required>
+                            <option value="">Pilih Kelas</option>
                             <?php
-                            $g = mysqli_query($koneksi, "SELECT * FROM tbl_guru");
+                            $g = mysqli_query($koneksi, "SELECT * FROM tbl_kelas");
                             while ($row = mysqli_fetch_array($g)) {
-                                $sel = (trim($row['kd_guru']) == trim($jadwal['kd_guru'])) ? 'selected' : '';
-                                echo "<option value='{$row['kd_guru']}' $sel>{$row['nm_guru']}</option>";
+                                $sel = (trim($row['kd_kelas']) == trim($jadwal['kd_kelas'])) ? 'selected' : '';
+                                echo "<option value='{$row['kd_kelas']}' $sel>{$row['nm_kelas']}</option>";
                             }
                             ?>
                         </select>
@@ -103,13 +102,13 @@ if (empty($details)) $details = [['Kd_mapel'=>'','hari'=>'','jam'=>'','kelas'=>'
                         <?php foreach ($details as $d): ?>
                             <div class="row mb-2">
                                 <div class="col-md-3">
-                                    <select name="Kd_mapel[]" class="form-control" required>
-                                        <option value="" disabled <?= $d['Kd_mapel']==''?'selected':'' ?>>---Pilih Mata Pelajaran---</option>
+                                    <select name="kd_mapel[]" class="form-control" required>
+                                        <option value="" disabled <?= $d['kd_mapel']==''?'selected':'' ?>>---Pilih Mata Pelajaran---</option>
                                         <?php
                                         $mapel = mysqli_query($koneksi, "SELECT * FROM tbl_mapel");
                                         while ($m = mysqli_fetch_array($mapel)) {
-                                            $sel = ($m['Kd_mapel'] == $d['Kd_mapel']) ? 'selected' : '';
-                                            echo "<option value='{$m['Kd_mapel']}' $sel>{$m['Nm_mapel']}</option>";
+                                            $sel = ($m['kd_mapel'] == $d['kd_mapel']) ? 'selected' : '';
+                                            echo "<option value='{$m['kd_mapel']}' $sel>{$m['nm_mapel']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -131,13 +130,13 @@ if (empty($details)) $details = [['Kd_mapel'=>'','hari'=>'','jam'=>'','kelas'=>'
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="kelas[]" class="form-control" required>
-                                        <option value="" disabled <?= $d['kelas']==''?'selected':'' ?>>---Pilih Kelas---</option>
+                                    <select name="nm_guru[]" class="form-control" required>
+                                        <option value="" disabled <?= $d['nm_guru']==''?'selected':'' ?>>---Pilih Guru---</option>
                                         <?php
-                                        $kelas = mysqli_query($koneksi, "SELECT * FROM tbl_kelas");
-                                        while ($k = mysqli_fetch_array($kelas)) {
-                                            $sel = ($k['nm_kelas'] == $d['kelas']) ? 'selected' : '';
-                                            echo "<option value='{$k['nm_kelas']}' $sel>{$k['nm_kelas']}</option>";
+                                        $guru = mysqli_query($koneksi, "SELECT * FROM tbl_guru");
+                                        while ($g = mysqli_fetch_array($guru)) {
+                                            $sel = ($g['nm_guru'] == $d['nm_guru']) ? 'selected' : '';
+                                            echo "<option value='{$g['nm_guru']}' $sel>{$g['nm_guru']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -149,12 +148,12 @@ if (empty($details)) $details = [['Kd_mapel'=>'','hari'=>'','jam'=>'','kelas'=>'
                     <button type="button" class="btn btn-info" onclick="tambahBaris()">Tambah Mapel</button>
                     <br><br>
                     <input type="submit" class="btn btn-primary" name="update" value="Update">
-                    <a href="index.php?page=jadwal" class="btn btn-secondary">Batal</a>
+                    <a href="index.php?page=jadwal_kelas" class="btn btn-secondary">Batal</a>
                 </form>
 
                 <script>
                     function tambahBaris() {
-                        let container = document.getElementBykd('detailjadwal');
+                        let container = document.getElementBykd('detail_jadwal_kelas');
                         let row = container.firstElementChild.cloneNode(true);
                         row.querySelectorAll('select').forEach(sel => sel.selectedIndex = 0);
                         container.appendChild(row);

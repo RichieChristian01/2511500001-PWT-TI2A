@@ -12,38 +12,38 @@ require_once "config/koneksi.php";
 </div>
 
 <?php
-$carikode = mysqli_query($koneksi, "SELECT MAX(kd_jadwal) FROM jadwal") or die (mysqli_error($koneksi));
+$carikode = mysqli_query($koneksi, "SELECT MAX(kd_jadwalk) FROM jadwal_kelas") or die (mysqli_error($koneksi));
 $datakode = mysqli_fetch_array($carikode);
 if ($datakode && $datakode[0] !== null) {
-    $nilaikode = substr($datakode[0], 2);
+    $nilaikode = substr($datakode[0], 3);
     $kode = (int) $nilaikode;
     $kode = $kode + 1;
-    $hasilkode = "J-" . str_pad($kode, 3, "0", STR_PAD_LEFT);
+    $hasilkode = "JK-" . str_pad($kode, 3, "0", STR_PAD_LEFT);
 } else {
-    $hasilkode = "J-001";
+    $hasilkode = "JK-001";
 }
 $_SESSION["KODE"] = $hasilkode;
 
 if (isset($_POST['tambah'])) {
-    $kd_jadwal = $_POST['kd_jadwal'];
-    $kd_guru = $_POST['kd_guru'];
+    $kd_jadwalk = $_POST['kd_jadwalk'];
+    $kd_kelas = $_POST['kd_kelas'];
     $semester = $_POST['semester'];
     $tahun_ajaran = $_POST['tahun_ajaran'];
     $Kd_mapel = $_POST['Kd_mapel'];
     $hari = $_POST['hari'];
     $jam = $_POST['jam'];
-    $kelas = $_POST['kelas'];
+    $nm_guru = $_POST['nm_guru'];
 
-    $insertjadwal = mysqli_query($koneksi, "INSERT INTO jadwal values ('$kd_jadwal','$kd_guru','$semester','$tahun_ajaran')");
+    $insertjadwal = mysqli_query($koneksi, "INSERT INTO jadwal_kelas values ('$kd_jadwalk','$kd_kelas','$tahun_ajaran','$semester')");
    
     if (!$insertjadwal) {
-        echo "Gagal insert tbl jadwal: " . mysqli_error($koneksi);
+        echo "Gagal insert tabel jadwalkelas: " . mysqli_error($koneksi);
         die;
     }
 
     $allSuccess = true;
     for ($i = 0; $i < count($Kd_mapel); $i++) {
-        $insert = mysqli_query($koneksi, "INSERT INTO detail_jadwal (kd_jadwal, Kd_mapel, kelas, hari, jam) VALUES ('$kd_jadwal', '{$Kd_mapel[$i]}', '{$kelas[$i]}', '{$hari[$i]}', '{$jam[$i]}')");
+        $insert = mysqli_query($koneksi, "INSERT INTO detail_jadwal_kelas (kd_jadwalk, Kd_mapel, nm_guru, hari, jam) VALUES ('$kd_jadwalk', '{$Kd_mapel[$i]}', '{$nm_guru[$i]}', '{$hari[$i]}', '{$jam[$i]}')");
         if (!$insert) {
             $allSuccess = false;
             echo "Gagal insert detail ke-{$i}: " . mysqli_error($koneksi);
@@ -54,14 +54,14 @@ if (isset($_POST['tambah'])) {
     if($allSuccess) {
         echo '<div class="alert alert-info alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" 
-            aria-hkdden="true">&times;</button>
+            aria-idden="true">&times;</button>
         <h5><i class="icon fas fa-info"></i> Info </h5>
         <h4>Data Berhasil Disimpan</h4></div>';
-        echo '<meta http-equiv="refresh" content="2;url=index.php?page=jadwal"/>';
+        echo '<meta http-equiv="refresh" content="2;url=index.php?page=jadwal_kelas"/>';
     } else {
         echo '<div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert"
-            aria-hkdden="true">&times;</button>
+            aria-hidden="true">&times;</button>
         <h5><i class="icon fas fa-info"></i> Info </h5>
             <h4>Gagal menyimpan sebagian atau seluruh data detail.</h4>
         </div>';
@@ -78,16 +78,16 @@ if (isset($_POST['tambah'])) {
                     <form method="post" action="">
                         <div class="form-group">
                             <label>Kode Jadwal</label>
-                            <input type="text" name="kd_jadwal" value="<?=  $hasilkode ?>" class="form-control" readonly>
+                            <input type="text" name="kd_jadwalk" value="<?=  $hasilkode ?>" class="form-control" readonly>
                         </div>
                         <div class="form-group">
-                            <label>Guru</label>
-                            <select name="kd_guru" class="form-control">
-                                <option value="">Pilih Guru</option>
+                            <label>Kelas</label>
+                            <select name="kd_kelas" class="form-control">
+                                <option value="">Pilih Kelas</option>
                                 <?php
-                                $query = mysqli_query($koneksi, "SELECT * FROM tbl_guru");
+                                $query = mysqli_query($koneksi, "SELECT * FROM tbl_kelas");
                                 while ($g = mysqli_fetch_array($query)) {
-                                    echo "<option value=' {$g['kd_guru']} '>{$g['nm_guru']}</option>";
+                                    echo "<option value=' {$g['kd_kelas']} '>{$g['nm_kelas']}</option>";
                                 }
                                 ?>
                             </select>
@@ -102,7 +102,7 @@ if (isset($_POST['tambah'])) {
                         </div>
                         <div class="form-group">
                             <label>Tahun Ajaran</label>
-                            <select name="tahun_ajaran" kd="tahun_ajaran" class="form-control" required>
+                            <select name="tahun_ajaran" kd="semester" class="form-control" required>
                                 <option selected disabled>---Pilih Tahun Ajaran---</option>
                                 <option>2025/2026</option>
                                 <option>2026/2027</option>
@@ -149,12 +149,12 @@ if (isset($_POST['tambah'])) {
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="kelas[]" class="form-control" required>
-                                        <option selected disabled>---Pilih Mata Pelajaran---</option>
+                                    <select name="nm_guru[]" class="form-control" required>
+                                        <option selected disabled>---Pilih Guru---</option>
                                         <?php
-                                        $kelas = mysqli_query($koneksi, "SELECT * FROM tbl_kelas");
-                                        while ($k = mysqli_fetch_array($kelas)) {
-                                            echo "<option value='{$k['nm_kelas']}'>{$k['nm_kelas']}</option>";
+                                        $Guru = mysqli_query($koneksi, "SELECT * FROM tbl_guru");
+                                        while ($g = mysqli_fetch_array($Guru)) {
+                                            echo "<option value='{$g['nm_guru']}'>{$g['nm_guru']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -166,7 +166,7 @@ if (isset($_POST['tambah'])) {
                         <input type="submit" class="btn btn-primary" name="tambah" value="simpan">
                         <script>
                             function tambahBaris() {
-                                let container = document.getElementBykd('detail_jadwal');
+                                let container = document.getElementBykd('detailjadwal');
                                 let row = container.firstElementChild.cloneNode(true);
                                 row.querySelectorAll('input').forEach(input => input.value = '');
                                 container.appendChild(row);

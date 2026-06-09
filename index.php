@@ -106,134 +106,115 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+          <?php if($role == 'admin') : ?>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Master
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fas fa-angle-left"></i> 
               </p>
             </a>
-          
-              <?php if($role=="admin"){ ?>
-              <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="index.php?page=mapel" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'mapel' || $_GET['page'] == 'edit_mapel' || $_GET['page'] == 'tambah_mapel') ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mata Pelajaran</p>
+                </a>
+              </li>
               <li class="nav-item">
-                <a href="index.php?page=guru" class="nav-link">
+                <a href="index.php?page=guru" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'guru' || $_GET['page'] == 'edit_guru' || $_GET['page'] == 'tambah_guru') ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Guru</p>
                 </a>
               </li>
-
               <li class="nav-item">
-                <a href="index.php?page=siswa" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-              <p>Siswa</p>
-                </a>
-                  </li>
-
-            <li class="nav-item">
-              <a href="index.php?page=mapel" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-            <p>Mapel</p>
-              </a>
-                </li>
-
-            <li class="nav-item">
-              <a href="index.php?page=kelas" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-            <p>kelas</p>
-              </a>
-                </li>
-
-            <li class="nav-item">
-              <a href="index.php?page=ekstra001" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-            <p>Ekstrakurikuler</p>
-              </a>
-                </li>
-                <?php } ?>
-            
-              <?php if($role=="guru"){ ?>
-              <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?page=kelas" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'kelas' || $_GET['page'] == 'edit_kelas' || $_GET['page'] == 'tambah_kelas') ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Profil</p>
+                  <p>Kelas</p>
                 </a>
               </li>
-
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-              <p>Kelas</p>
-                </a>
-                  </li>
-
-              <li class="nav-item">
-                <a href="index.php?page=ganti_password" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-              <p>Ganti Password</p>
-                </a>
-                  </li>
-              <?php } ?>
-
-              <?php if($role=="mahasiswa"){ ?>
-              <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?page=siswa" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'siswa' || $_GET['page'] == 'edit_siswa' || $_GET['page'] == 'tambah_siswa') ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Profil</p>
+                  <p>Siswa</p>
                 </a>
               </li>
-
               <li class="nav-item">
-                <a href="index.php?page=ganti_password" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-              <p>Ganti Password</p>
+                <a href="index.php?page=ekstra2511500007" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'ekstra001' || $_GET['page'] == 'edit_ekstra2511500001' || $_GET['page'] == 'tambah_ekstra2511500007') ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ekstrakulikuler</p>
                 </a>
-                  </li>
-              <?php } ?>
-
-              <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <li class="nav-item menu-open">
+            <a href="" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Transaksi
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-
-            <?php if($role=="admin"){ ?>
-            <li class="nav-item">
-                <a href="index.php?page=jadwal_kelas" class="nav-link">
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?page=jadwal" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'jadwal' || $_GET['page'] == 'edit_jadwal' || $_GET['page'] == 'tambah_jadwal') ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Jadwal</p>
+                  <p>Jadwal Guru</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="index.php?page=jadwal_kelas" class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'jadwal_kelas' || $_GET['page'] == 'edit_jadwal_kelas' || $_GET['page'] == 'tambah_jadwal_kelas') ? 'active' : '' ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal Kelas</p>
                 </a>
               </li>
             </ul>
           </li>
-            <?php } ?>
-
-            <?php if($role=="guru"){ ?>
+          <?php endif ?>
+          <?php if($role == 'mahasiswa') : ?>
             <li class="nav-item">
-                <a href="index.php?page=jadwal_guru" class="nav-link">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Siswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Jadwal</p>
                 </a>
               </li>
-            </ul>
-          </li>
-            <?php } ?>
-
-          <li class="nav-item">
+            <?php endif ?>
+            <?php if($role == 'Guru') : ?>
+            <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Guru</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kelas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+            <li class="nav-item menu-open">
+              <p class="card-text">
+              </p>
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal</p>
+                </a>
+              </li>
+            <?php endif ?>
             <a href="logout.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                logout
+                Logout
+                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
@@ -243,6 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.sidebar -->
   </aside>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
