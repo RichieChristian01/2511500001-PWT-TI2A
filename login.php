@@ -82,7 +82,7 @@ if (isset($_POST['Username'])) {
         if ($userquery) {
           if ($Password == $userquery['Password']) {
               $_SESSION['Role'] = $userquery['Role'];
-              $_SESSION['Username'] = $Username;  
+              $_SESSION['Username'] = $Username;
 
               if ($userquery['Role'] == 'admin') {
                   header("location:index.php");
